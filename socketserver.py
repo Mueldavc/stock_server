@@ -1,10 +1,6 @@
 import numpy as np
 from datetime import datetime
 from keras.models import load_model
-from os import path
-import sys
-
-sys.path.append(path.abspath(r'C:\Users\mueld\Documents\Python_Projects\AutoEncoder'))
 from DataSet.DataSet import StockData_robo
 import socket
 
@@ -19,11 +15,11 @@ def calcregr(msg=''):
     y_pred = autoencoder.predict(train_x)
     x_train = y_pred.reshape(y_pred.shape[0], -1)
     y_pred = regressao.predict(x_train)
-    y_pred = np.argmax(y_pred).astype(str)
+    y_pred = np.argmax(y_pred)
     now = datetime.now()
     time = now.strftime("%H:%M:%S")
     print(y_pred, ' ', time)
-    print('venda' if y_pred == "0" else 'compra')
+    print('venda' if y_pred == 0 else 'compra')
     return str(y_pred)
 
 
@@ -44,7 +40,7 @@ class SocketServer:
         self.cummdata = ''
 
         while True:
-            data = self.conn.recv(200)
+            data = self.conn.recv(1000)
             self.cummdata += data.decode("utf-8")
             if not data:
                 break
