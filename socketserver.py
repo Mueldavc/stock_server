@@ -2,7 +2,6 @@ import numpy as np
 from datetime import datetime
 from keras.models import load_model
 from os import path
-import time
 import sys
 
 sys.path.append(path.abspath(r'C:\Users\mueld\Documents\Python_Projects\AutoEncoder'))
@@ -21,7 +20,9 @@ def calcregr(msg=''):
     x_train = y_pred.reshape(y_pred.shape[0], -1)
     y_pred = regressao.predict(x_train)
     y_pred = np.argmax(y_pred).astype(str)
-    print(y_pred)
+    now = datetime.now()
+    time = now.strftime("%H:%M:%S")
+    print(y_pred, ' ', time)
     print('venda' if y_pred == "0" else 'compra')
     return y_pred
 
