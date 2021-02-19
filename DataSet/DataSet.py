@@ -146,7 +146,7 @@ class StockData_robo(object):
         if not mt5.initialize():
             print("initialize() failed")
             mt5.shutdown()
-        tick_frame = mt5.copy_rates_from(self.stock, self.timeframe, self.date, 72 + 17)
+        tick_frame = mt5.copy_rates_from(self.stock, self.timeframe, self.date, 80 + 17)
         tick_frame = pd.DataFrame(tick_frame)
         tick_frame.time = pd.to_datetime(tick_frame.time, unit='s')
         tick_frame.set_index(tick_frame.time, inplace=True)
@@ -189,7 +189,7 @@ class StockData_robo(object):
         tickframe = self.tickframe
         self.n_obs = int(self.n_features * n_in)
         tickframe = self._series_to_supervised(tickframe, n_in, n_out)
-        self.train_x = tickframe.values[:, :self.n_obs].reshape(-1, self.n_features, n_in)
+        self.train_x = tickframe.values[-1, :self.n_obs].reshape(-1, self.n_features, n_in)
 
     def _series_to_supervised(self, tickframe, n_in, n_out):
         data = self.scaler_x.transform(tickframe)

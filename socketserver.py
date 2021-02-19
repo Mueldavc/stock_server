@@ -20,7 +20,7 @@ def calcregr(msg=''):
     time = now.strftime("%H:%M:%S")
     print(y_pred, ' ', time)
     print('venda' if y_pred == 0 else 'compra')
-    return str(y_pred)
+    return str(1)
 
 
 class SocketServer:
@@ -40,7 +40,7 @@ class SocketServer:
         self.cummdata = ''
 
         while True:
-            data = self.conn.recv(1000)
+            data = self.conn.recv(2000)
             self.cummdata += data.decode("utf-8")
             if not data:
                 break
